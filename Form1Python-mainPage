@@ -1,0 +1,37 @@
+from ._anvil_designer import Form1Template
+from anvil import *
+import anvil.server
+
+#import plotly
+#from test.js import *
+
+class Form1(Form1Template):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+
+    # Any code you write here will run when the form opens.
+    
+
+  def drop_down_1_show(self, **event_args):
+    """This method is called when the DropDown is shown on the screen"""
+    pass
+
+  def movehub_rating_change(self, **event_args):
+    """This method is called when an item is selected"""
+    pass
+
+  def run_search_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    weights = [self.movehub_rating.selected_value, self.purchase_power.selected_value, 
+              self.health_care.selected_value, self.quality_of_life.selected_value,self.pollution.selected_value,
+              self.crime_rating.selected_value, self.number_of_colleges.selected_value,
+              self.cappucino.selected_value, self.cinema.selected_value, self.wine.selected_value,
+              self.gasoline.selected_value, self.average_rent.selected_value, self.average_disposable_income.selected_value]
+    url = anvil.server.get_app_origin() + "/plot.html"
+    #open html file of the graphical display at bottom of page
+    f1=open(url, "w")
+    #retrieve and write html file of new map to the html of the graphical display
+    f2=open(anvil.server.call('calculate_rankings',weights), "r")
+    f1.write(f2.read)
+    pass
